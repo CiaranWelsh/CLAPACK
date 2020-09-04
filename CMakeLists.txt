@@ -10,7 +10,7 @@ else ()
     set(DSECOND_SRC ${CLAPACK_SOURCE_DIR}/INSTALL/dsecnd.c)
 endif ()
 
-option(BUILD_F2C_ARITHCHK "build the arithchk target of f2c" OFF)
+#option(BUILD_F2C_ARITHCHK "build the arithchk target of f2c" ON)
 option(USE_BLAS_WRAP "pre-pend f2c_ to each function in blas" OFF)
 option(BUILD_TESTING "build the clapack tests" OFF)
 if (NOT USE_BLAS_WRAP)
@@ -39,3 +39,34 @@ configure_file(${CLAPACK_SOURCE_DIR}/clapack-config-version.cmake.in
                ${CLAPACK_BINARY_DIR}/clapack-config-version.cmake @ONLY)
 configure_file(${CLAPACK_SOURCE_DIR}/clapack-config.cmake.in
                ${CLAPACK_BINARY_DIR}/clapack-config.cmake @ONLY)
+
+install(TARGETS f2c blas lapack
+        EXPORT clapack
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/clapack
+        )
+
+# install the export info
+install(
+        EXPORT clapack
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/clapack
+        NAMESPACE CLAPACK::
+        FILE clapack.cmake
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

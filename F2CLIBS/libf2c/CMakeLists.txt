@@ -38,20 +38,19 @@ set(TIME dtime_.c etime_.c)
 
 # For INTEGER*8 support (which requires system-dependent adjustments to
 # f2c.h), add ${QINT} to the OFILES  assignment below...
-if (${BUILD_F2C_ARITHCHK})
+message(STATUS "doing arithchk")
 
-    add_executable(arithchk arithchk.c)
-    if (UNIX)
-        target_link_libraries(arithchk m)
-    endif ()
-    set_target_properties(arithchk PROPERTIES COMPILE_DEFINITIONS
-                          "NO_FPINIT;NO_LONG_LONG")
-    ADD_CUSTOM_COMMAND(
-            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/arith.h
-            COMMAND arithchk > ${CMAKE_CURRENT_BINARY_DIR}/arith.h
-            DEPENDS arithchk
-    )
+add_executable(arithchk arithchk.c)
+if (UNIX)
+    target_link_libraries(arithchk m)
 endif ()
+set_target_properties(arithchk PROPERTIES COMPILE_DEFINITIONS
+                      "NO_FPINIT;NO_LONG_LONG")
+ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/arith.h
+        COMMAND arithchk > ${CMAKE_CURRENT_BINARY_DIR}/arith.h
+        DEPENDS arithchk
+)
 
 
 set(OFILES ${MISC} ${POW} ${CX} ${DCX} ${REAL} ${DBL} ${INT}
